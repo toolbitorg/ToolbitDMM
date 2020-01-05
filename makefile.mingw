@@ -1,4 +1,4 @@
-TARGET = ToolbitDMM-win32-x64/ToolbitDMM.exe
+TARGET = dist/ToolbitDMM-win32-x64/ToolbitDMM.exe
 
 # implementation
 
@@ -7,11 +7,11 @@ all: $(TARGET)
 FORCE:
 
 $(TARGET):
-	electron-packager ./src ToolbitDMM --platform=win32 --arch=x64 --electronVersion=4.2.12 --icon=icon/icon.ico
-	cp -r ToolbitDMM-win32-x64 ./binary-release/
+	@[ -d dist ] || mkdir -p dist
+	cd dist; electron-packager ../src ToolbitDMM --platform=win32 --arch=x64 --electronVersion=4.2.12 --icon=../icon/icon.ico
 
 clean:
-	rm -fr ToolbitDMM-win32-x64
+	rm -fr dist/ToolbitDMM-win32-x64
 
 
 .PHONY: all clean

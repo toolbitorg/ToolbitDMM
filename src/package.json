@@ -1,28 +1,35 @@
 {
-  "name": "ToolbitDMM",
+  "name": "toolbit-dmm",
   "version": "0.0.1",
   "description": "Toolibt DMM GUI application",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/toolbitorg/ToolbitSDK",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toolbitorg/ToolbitDMM.git"
+  },
   "keywords": [
     "toolbit",
     "dmm",
     "multimeter",
     "tester"
   ],
-  "author": "Toolbit",
+  "author": "Junji Ohama <junji.ohama@toolbit.org> (https://github.com/ohamax)",
   "license": "GPL-2.0-only",
   "devDependencies": {
-    "electron": "^4.2.12",
     "electron-rebuild": "^1.8.5"
   },
   "dependencies": {
+    "electron": "^4.2.12",
     "toolbit-lib": "^0.0.3",
     "chartist": "^0.11.4",
     "chartist-plugin-zoom": "^0.5.1",
     "moment": "^2.24.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/toolbitorg/ToolbitDMM/issues"
+  },
+  "homepage": "https://github.com/toolbitorg/ToolbitDMM#readme"
 }
