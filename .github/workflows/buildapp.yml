@@ -19,9 +19,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build application
+    - name: npm install
       run: |
         cd src; npm install
+
+    - name: Make binary
+      run: |
         npm install -g electron-packager
         make
 
