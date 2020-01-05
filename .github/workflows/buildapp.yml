@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    
+
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-      
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -21,15 +21,15 @@ jobs:
 
     - name: Build application
       run: |
-        npm install
+        cd src; npm install
         npm install -g electron-packager
         make
-       
+
     - name: Archive artifacts
       uses: actions/upload-artifact@v1
       with:
-       name: binary-release
-       path: binary-release
+       name: ToolibtDMM-binary-dist
+       path: dist
 
 #    - name: npm install, build, and test
 #      run: |
