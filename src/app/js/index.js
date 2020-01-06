@@ -11,10 +11,10 @@ var Chartist=require('chartist');
 require('./js/chartist-plugin-zoom/dist/chartist-plugin-zoom');
 
 const TbiDeviceManager=require('toolbit-lib').TbiDeviceManager;
-const Luke=require('toolbit-lib').Luke;
+const Dmm=require('toolbit-lib').Dmm;
 var tbiDeviceManager = new TbiDeviceManager();
 console.log('The number of connected USB device: ' + tbiDeviceManager.getDeviceNum());
-var luke = new Luke();
+var dmm = new Dmm();
 
 var dmmMode;
 var dmmRange;
@@ -77,7 +77,7 @@ function enableElements(elems) {
 }
 
 function openDevice() {
-  if(!luke.open()) {
+  if(!dmm.open()) {
     // Polling connection of device
     window.setTimeout(openDevice, 3000);
     return;
@@ -231,9 +231,9 @@ function acquisition() {
   var dispUnit = document.getElementById('disp-unit');
 
   if(dmmMode=='V') {
-    val = luke.getVoltage();
+    val = dmm.getVoltage();
   } else if(dmmMode=='A') {
-    val = luke.getCurrent();
+    val = dmm.getCurrent();
   };
   var t = new Date();
 
