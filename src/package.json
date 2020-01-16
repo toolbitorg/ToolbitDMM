@@ -1,10 +1,18 @@
 {
-  "name": "toolbit-dmm",
-  "version": "0.0.1",
+  "name": "ToolbitDMM",
+  "version": "0.0.2",
   "description": "Toolibt DMM GUI application",
   "main": "main.js",
+  "build": {
+    "appId": "com.electron.toolbitdmm",
+    "mac": {
+      "target": "dmg"
+    }
+  },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -18,15 +26,15 @@
   ],
   "author": "Junji Ohama <junji.ohama@toolbit.org> (https://github.com/ohamax)",
   "license": "GPL-2.0-only",
-  "devDependencies": {
-    "electron-rebuild": "^1.8.5"
-  },
   "dependencies": {
-    "electron": "^4.2.12",
     "toolbit-lib": "^0.0.4",
     "chartist": "^0.11.4",
     "chartist-plugin-zoom": "^0.5.1",
     "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "electron": "^4.2.12",
+    "electron-builder": "^22.2.0"
   },
   "bugs": {
     "url": "https://github.com/toolbitorg/ToolbitDMM/issues"
