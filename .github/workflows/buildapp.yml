@@ -1,10 +1,11 @@
-name: Toolbit DMM app CI
+name: CI
 
 on: [push]
 
 jobs:
   build:
 
+    name: Build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -20,19 +21,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: npm install
-      run: |
-        cd src; npm install
+      run: cd src; npm install
 
-    - name: Make binary
-      run: |
-        npm install -g electron-packager
-        make
+    - name: Make package
+      run: cd src; npm run dist
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v1
       with:
        name: ToolibtDMM-binary-dist
-       path: dist
+       path: src/dist
 
 #    - name: npm install, build, and test
 #      run: |
