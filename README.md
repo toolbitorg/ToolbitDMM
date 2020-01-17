@@ -10,6 +10,7 @@ This is not ready for release.
 ## Reference
 
 - `electron-quick-start` https://electronjs.org/docs/tutorial/quick-start
+- `electron-updater-example` https://github.com/iffy/electron-updater-example
 
 ## Licence
 
