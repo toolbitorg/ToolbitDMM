@@ -11,6 +11,11 @@ const config = require(configPath)
 const appBundleId = config.build.appId
 
 async function notarizeApp() {
+
+  if(process.platform !== 'darwin') {
+      return;
+  }
+
   console.log(`afterSign: Notarizing ${appBundleId} in ${appPath}`)
   await notarize({
     appBundleId,
