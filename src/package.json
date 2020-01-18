@@ -4,10 +4,14 @@
   "description": "Toolibt DMM GUI application",
   "main": "main.js",
   "build": {
-    "appId": "com.electron.toolbitdmm",
+    "appId": "org.toolbit.dmm",
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
     },
+    "afterSign": "./scripts/notarize.js",
     "publish": [
       {
         "provider": "github"
@@ -33,16 +37,17 @@
   "author": "Junji Ohama <junji.ohama@toolbit.org> (https://github.com/ohamax)",
   "license": "GPL-2.0-only",
   "dependencies": {
-    "electron-log": "^4.0.3",
-    "electron-updater": "^4.2.0",
-    "toolbit-lib": "^0.0.4",
     "chartist": "^0.11.4",
     "chartist-plugin-zoom": "^0.5.1",
-    "moment": "^2.24.0"
+    "electron-log": "^4.0.3",
+    "electron-updater": "^4.2.0",
+    "moment": "^2.24.0",
+    "toolbit-lib": "^0.0.4"
   },
   "devDependencies": {
     "electron": "^4.2.12",
-    "electron-builder": "^22.2.0"
+    "electron-builder": "^22.2.0",
+    "electron-notarize": "^0.2.1"
   },
   "bugs": {
     "url": "https://github.com/toolbitorg/ToolbitDMM/issues"

@@ -19,7 +19,7 @@ function createWindow () {
 //    width: 340, height: 195, minWidth: 340, minHeight: 195, maxHeight: 631,
     width: 1040, height: 800, minWidth: 340, minHeight: 195, maxHeight: 931,
     autoHideMenuBar: true,
-    title: "Toolbit DMM V" + app.getVersion()
+    title: "Toolbit DMM " + app.getVersion()
   })
   //mainWindow = new BrowserWindow({width: 270, height: 250,
   //  resizable: false, autoHideMenuBar: true})
