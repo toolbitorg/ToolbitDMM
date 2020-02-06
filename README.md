@@ -51,6 +51,6 @@ npm run dist
 - `electron-updater-example` https://github.com/iffy/electron-updater-example
 
 
-## Licence
+## License
 
 [GPLv2] Please refer to the LICENSE file in this repository

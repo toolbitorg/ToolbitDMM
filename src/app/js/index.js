@@ -6,36 +6,25 @@
 //console.warn = function(){/* NOP */};
 //console.error = function(){/* NOP */};
 
-var moment=require('moment');
-var Chartist=require('chartist');
+const moment=require('moment');
+const Chartist=require('chartist');
 require('./js/chartist-plugin-zoom/dist/chartist-plugin-zoom');
 
 const TbiDeviceManager=require('toolbit-lib').TbiDeviceManager;
-const Dmm=require('toolbit-lib').Dmm;
 var tbiDeviceManager = new TbiDeviceManager();
-console.log('The number of connected USB device: ' + tbiDeviceManager.getDeviceNum());
-var dmm = new Dmm();
+var connectedDmmNum = 0;
 
-var dmmMode;
-var dmmRange;
+const Dmmctrl=require('./js/dmmctrl');
+var dmmctrl = Array(4);
+
 var timeInterval;
-var holdChecked = false;
 var graphChecked = false;
 var clearGraph = false;
 var runChecked = false;
-var plotData = [];
+var plotData = [[],[],[],[]];
 var plotStart = new Date();
 var chart;
 
-var setDmmMode = function(mode) {
-  dmmMode = mode;
-  console.log('dmmMode:' + mode);
-};
-
-var setDmmRange = function(range) {
-  dmmRange = range;
-  console.log('dmmRange:' + range);
-};
 
 var setTimeInterval = function(t) {
   if(t=='Fast') {
@@ -48,6 +37,7 @@ var setTimeInterval = function(t) {
   console.log('timeInterval:' + t);
 };
 
+var dmmContainers = ['dmm-container0', 'dmm-container1', 'dmm-container2', 'dmm-container3'];
 var chartContainer = document.getElementById('chart-container');
 var chart = new Chartist.Line(chartContainer, {}, {});
 
@@ -77,31 +67,38 @@ function enableElements(elems) {
 }
 
 function openDevice() {
-  if(!dmm.open()) {
-    // Polling connection of device
+  tbiDeviceManager.updateDeviceList();
+  var serials = tbiDeviceManager.getSerialList('DMM');
+  console.log('The number of detected DMM: ' + serials.size());
+
+  if(serials.size()==0) {
+    // Fail to open and then try it later
     window.setTimeout(openDevice, 3000);
     return;
   }
-  clearGraph = true;
+  for(var i=0; i<serials.size(); i++) {
 
-  setDmmMode(document.getElementById('mode').value);
-  setDmmRange(document.getElementById('range').value);
+    dmmctrl[i] = new Dmmctrl(dmmContainers[i]);
+    if(dmmctrl[i].dmm.open(serials.get(i))) {
+      // Fail to open and then try it later
+      window.setTimeout(openDevice, 3000);
+      return;
+    }
+    connectedDmmNum++;
+    clearGraph = true;
+  }
+
   setTimeInterval(document.getElementById('interval').value);
 
-  document.getElementById('mode').addEventListener('change', (event) => {
-    setDmmMode(event.target.value);
-    clearGraph = true;
-  });
-  document.getElementById('range').addEventListener('change', (event) => {
-    setDmmRange(event.target.value);
-  });
   document.getElementById('interval').addEventListener('change', (event) => {
     setTimeInterval(event.target.value);
     clearGraph = true;
   });
   document.getElementById('hold').addEventListener('change', function() {
-    holdChecked = this.checked;
-    console.log('holdChecked:' + holdChecked);
+    for(var i=0; i<connectedDmmNum; i++) {
+      dmmctrl[i].hold(this.checked);
+    }
+    console.log('holdChecked:' + this.checked);
   });
 
   document.getElementById('run').addEventListener('change', function() {
@@ -121,7 +118,7 @@ function openDevice() {
   enableElements(document.getElementById('main').getElementsByTagName('button'));
   document.getElementById('save').disabled = true;
 
-  window.setTimeout(acquisition, timeInterval);
+  window.setTimeout(update, timeInterval);
 }
 
 function initialize() {
@@ -187,7 +184,19 @@ function initializeGraph() {
     series: [
       {
         name: 'series-1',
-        data: plotData
+        data: plotData[0]
+      },
+      {
+        name: 'series-2',
+        data: plotData[1]
+      },
+      {
+        name: 'series-3',
+        data: plotData[2]
+      },
+      {
+        name: 'series-4',
+        data: plotData[3]
       },
       {
         name: 'to-show-zero-point',
@@ -222,66 +231,32 @@ function initializeGraph() {
   });  // end of options
 }
 
-function acquisition() {
-  window.setTimeout(acquisition, timeInterval);
+function update() {
+  window.setTimeout(update, timeInterval);
 
-  var val;
-  var unit = '';
-  var dispVal = document.getElementById('disp-val');
-  var dispUnit = document.getElementById('disp-unit');
+  var val = Array(4);
 
-  if(dmmMode=='V') {
-    val = dmm.getVoltage();
-  } else if(dmmMode=='A') {
-    val = dmm.getCurrent();
-  };
+  for(var i=0; i<connectedDmmNum; i++) {
+    val[i] = dmmctrl[i].acquisition();
+  }
+
   var t = new Date();
 
+  console.log('value[' + t.toJSON() + ']:' + val);
+
   if(clearGraph) {
-    plotData.length = 0;
-    plotData = [];
+    plotData = [[],[],[],[]];
     clearGraph = false;
     plotStart = t;
     initializeGraph();
   }
 
-   if(runChecked) {
+  if(runChecked) {
     var tdiff = t.getTime() - plotStart.getTime();
-    plotData.push({x: tdiff, y: val});
-  }
 
-  if(!holdChecked) {
-
-    if(dmmRange=='u') {
-      val = val*1000000.0;
-      unit = 'u';
-    } else if(dmmRange=='m') {
-      val = val*1000.0;
-      unit = 'm';
-    } else if(dmmRange=='Auto') {
-      if(Math.abs(val)<0.001) {
-        val = val*1000000.0;
-        unit = 'u';
-      }
-      else if(Math.abs(val)<1.0) {
-        val = val*1000.0;
-        unit = 'm';
-      }
+    for(var i=0; i<connectedDmmNum; i++) {
+      plotData[i].push({x: tdiff, y: val[i]});
     }
-
-    var splitVal = String(Math.abs(val)).split('.');
-    if(!splitVal[1]) {
-      dispVal.value = val.toFixed(3);
-    } else {
-      var len = splitVal[0].length;
-      if(len>4) {
-        dispVal.value = Math.round(val);
-      } else {
-        dispVal.value = val.toFixed(4-len);
-      }
-    }
-    dispUnit.value = unit + dmmMode;
-    console.log('value[' + t.toJSON() + ']:' + dispVal.value);
   }
 
   if(runChecked) {

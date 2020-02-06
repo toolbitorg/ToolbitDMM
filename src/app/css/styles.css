@@ -24,20 +24,27 @@ body {
   padding-right: 138px;
 }
 
-#main .disp{
+#main .disp-val {
   font-size: 40px;
   height: 53px;
   margin: 2px;
   float: left;
 }
 
-#main #disp-val {
+#main .disp-unit {
+  font-size: 40px;
+  height: 53px;
+  margin: 2px;
+  float: left;
+}
+
+#main .disp-val {
   position: relative;
   width: 100%;
   text-align: right;
 }
 
-#main #disp-unit {
+#main .disp-unit {
   position: absolute;
   right: 55px;
   width: 70px;
