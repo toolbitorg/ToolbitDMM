@@ -114,6 +114,22 @@ body {
   display: none;
 }
 
+#reset-zoom {
+  display: block;
+  background-color: #FFFFFF;
+  color: #000000;
+  font-size: 13px;
+  width: 70px;
+  height: 29px;
+  margin: 2px;
+  font-size: 11px;
+  text-align: center;
+  float: right;
+  cursor: pointer;
+  border: 2px solid #009cd3;
+  border-radius: 2px;
+}
+
 button {
   display: block;
   background-color: #FFFFFF;
@@ -130,12 +146,12 @@ button {
   border-radius: 2px;
 }
 
-button:hover {
+button:hover, #reset-zoom:hover {
   background-color: #00BED4;
   color: #FFFFFF;
 }
 
-button:disabled {
+button:disabled, #reset-zoom:disabled {
   background-color: #e9e9e9;
   color: #ccc;
   border: 2px solid #ccc;

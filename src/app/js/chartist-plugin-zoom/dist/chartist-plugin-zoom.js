@@ -41,6 +41,7 @@
         var rect, svg, axisX, axisY, chartRect;
         var downPosition;
         var onZoom = options.onZoom;
+        var ongoingMouseDown = options.ongoingMouseDown;
         var ongoingTouches = [];
 
         chart.on('draw', function (data) {
@@ -175,6 +176,7 @@
               rect.attr(getRect(downPosition, downPosition));
               show(rect);
               event.preventDefault();
+              ongoingMouseDown && ongoingMouseDown();
             }
           }
         }
