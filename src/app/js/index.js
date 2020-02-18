@@ -250,7 +250,7 @@ function initializeGraph() {
     series: [
       {
         name: 'series-1',   // Red
-        data: plotData[1]
+        data: plotData[3]
       },
       {
         name: 'series-2',   // Pink
@@ -262,7 +262,7 @@ function initializeGraph() {
       },
       {
         name: 'series-4',   // Brown
-        data: plotData[0]
+        data: plotData[2]
       },
       {
         name: 'series-5',   // Dark blue
