@@ -20,34 +20,37 @@ class Dmmctrl {
   init() {
     var divElem = document.getElementById(this.id);
     divElem.innerHTML =
+    '<div id="top-left">'+
+    '  <input id="' + this.id + '-disp-color" class="disp-color" type="text" name="color" readonly="readonly">'+
+    '</div>'+
     '<div id="top" class="clearfix">'+
     '  <div>'+
-    '    <input id="' + this.id + 'disp-val" class="disp-val" type="text" name="value" readonly="readonly">'+
-    '    <input id="' + this.id + 'disp-unit" class="disp-unit" type="text" name="unit" readonly="readonly">'+
+    '    <input id="' + this.id + '-disp-val" class="disp-val" type="text" name="value" readonly="readonly">'+
+    '    <input id="' + this.id + '-disp-unit" class="disp-unit" type="text" name="unit" readonly="readonly">'+
     '  </div>'+
     '  <div class="top-right">'+
-    '    <select id="' + this.id + 'range" name="range" class="mode">'+
+    '    <select id="' + this.id + '-range" name="range" class="mode">'+
     '      <option selected="selected">Auto</option>'+
     '      <option></option>'+
     '      <option>m</option>'+
     '      <option>u</option>'+
     '    </select>'+
     '    <br>'+
-    '    <select id="' + this.id + 'mode" name="mode" class="mode">'+
+    '    <select id="' + this.id + '-mode" name="mode" class="mode">'+
     '      <option selected="selected">V</option>'+
     '      <option>A</option>'+
     '    </select>'+
     '  </div>'+
     '</div>';
 
-    this.mode = document.getElementById(this.id + 'mode').value;
-    this.range = document.getElementById(this.id + 'range').value;
+    this.mode = document.getElementById(this.id + '-mode').value;
+    this.range = document.getElementById(this.id + '-range').value;
 
-    document.getElementById(this.id + 'mode').addEventListener('change', (event) => {
+    document.getElementById(this.id + '-mode').addEventListener('change', (event) => {
       this.mode = event.target.value;
-      clearGraph = true;
+      clearGraph();
     });
-    document.getElementById(this.id + 'range').addEventListener('change', (event) => {
+    document.getElementById(this.id + '-range').addEventListener('change', (event) => {
       this.range = event.target.value;
     });
   }
@@ -75,8 +78,8 @@ class Dmmctrl {
   showVal(val) {
 
     var unit = '';
-    var dispVal = document.getElementById(this.id + 'disp-val');
-    var dispUnit = document.getElementById(this.id + 'disp-unit');
+    var dispVal = document.getElementById(this.id + '-disp-val');
+    var dispUnit = document.getElementById(this.id + '-disp-unit');
 
     if(this.range=='u') {
       val = val*1000000.0;

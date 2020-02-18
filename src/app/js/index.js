@@ -249,20 +249,32 @@ function initializeGraph() {
   {  // data
     series: [
       {
-        name: 'series-1',
-        data: plotData[0]
-      },
-      {
-        name: 'series-2',
+        name: 'series-1',   // Red
         data: plotData[1]
       },
       {
-        name: 'series-3',
-        data: plotData[2]
+        name: 'series-2',   // Pink
+        data: []
       },
       {
-        name: 'series-4',
-        data: plotData[3]
+        name: 'series-3',   // Yellow
+        data: []
+      },
+      {
+        name: 'series-4',   // Brown
+        data: plotData[0]
+      },
+      {
+        name: 'series-5',   // Dark blue
+        data: []
+      },
+      {
+        name: 'series-6',   // Green
+        data: plotData[0]
+      },
+      {
+        name: 'series-7',   // Blue
+        data: plotData[1]
       },
       {
         name: 'to-show-zero-point',
