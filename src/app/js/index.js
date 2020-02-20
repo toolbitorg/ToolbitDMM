@@ -65,6 +65,10 @@ var fsm = new StateMachine({
     onResetZoom: function() {
       resetZoomFunc && resetZoomFunc();
       resetZoomFunc = null;
+      for(var i=0; i<connectedDmmNum; i++) {
+        dmmctrl[i].clearStat();
+      }
+
       document.getElementById('reset-zoom').disabled = true;
     },
 
@@ -165,6 +169,7 @@ function openDevice() {
       return;
     }
     connectedDmmNum++;
+    window.resizeBy(0, 78);
   }
 
   setTimeInterval(document.getElementById('interval').value);
@@ -210,7 +215,9 @@ function initialize() {
   document.getElementById('graph').addEventListener('change', function() {
     if(this.checked) {
       fsm.enableGraph();
-      fsm.startLogging();
+      if(connectedDmmNum>0) {
+        fsm.startLogging();
+      }
     } else {
       fsm.disableGraph()
     }
@@ -238,6 +245,10 @@ function initialize() {
 var resetZoomFunc;
 function onZoom(chart, reset) {
   resetZoomFunc = reset;
+  console.log(chart.options.axisX.highLow);
+  for(var i=0; i<connectedDmmNum; i++) {
+    dmmctrl[i].showStat(chart.options.axisX.highLow.low, chart.options.axisX.highLow.high);
+  }
 }
 
 function ongoingMouseDown() {
@@ -311,7 +322,12 @@ function initializeGraph() {
 }
 
 function clearGraph() {
+
   plotData = [[],[],[],[]];
+  for(var i=0; i<connectedDmmNum; i++) {
+    dmmctrl[i].clearPlotdat();
+    plotData[i] = dmmctrl[i].plotdat;
+  }
   initializeGraph();
   chart.update();
 }
@@ -319,27 +335,22 @@ function clearGraph() {
 function update() {
   window.setTimeout(update, timeInterval);
 
-  var val = Array(4);
-
-  for(var i=0; i<connectedDmmNum; i++) {
-    val[i] = dmmctrl[i].acquisition();
-  }
-
   var t = new Date();
-
-  console.log('value[' + t.toJSON() + ']:' + val);
-
   if(plotData[0].length==0) {
     plotStart = t;
   }
+  var tdiff = t.getTime() - plotStart.getTime();
 
   if(fsm.state=='run' || fsm.state=='run-zoom') {
-    var tdiff = t.getTime() - plotStart.getTime();
-
     for(var i=0; i<connectedDmmNum; i++) {
-      plotData[i].push({x: tdiff, y: val[i]});
+      dmmctrl[i].acquisition(tdiff, true);
+    }
+  } else {
+    for(var i=0; i<connectedDmmNum; i++) {
+      dmmctrl[i].acquisition(tdiff, false);
     }
   }
+  //console.log('value[' + t.toJSON() + ']:' + val);
 
   if(fsm.state=='run') {
     chart.update();

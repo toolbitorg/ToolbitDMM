@@ -17,7 +17,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
 //    width: 340, height: 195, minWidth: 340, minHeight: 195, maxHeight: 631,
-    width: 1040, height: 800, minWidth: 340, minHeight: 195, maxHeight: 931,
+    width: 450, height: 75, minWidth: 450, minHeight: 75, maxHeight: 900,
     autoHideMenuBar: true,
     title: "Toolbit DMM " + app.getVersion()
   })
@@ -28,7 +28,7 @@ function createWindow () {
   mainWindow.loadFile('app/index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

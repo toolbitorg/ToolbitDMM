@@ -19,84 +19,114 @@ body {
   clear: both;
 }
 
-#main #top {
-  position: relative;
-  padding-left: 18px;
-  padding-right: 138px;
-}
-
-#main .disp-color {
-  font-size: 1px;
-  height: 53px;
-  margin: 2px 0px 2px 2px;
+#top-left {
+  width: 110px;
+  left: 0px;
+  margin: 2px;
+  border: 1px solid #A9A9A9;
+  padding: 0px;
   float: left;
 }
 
-#main #dmm-container0-disp-color {
+#top-middle {
+  position: relative;
+  padding-left: 116px;
+  padding-right: 146px;
+}
+
+#top-right {
+  width: 135px;
+  right: 0px;
+  float: right;
+}
+
+.disp-color {
+  position: relative;
+  width: 10px;
+  height: 62px;
+  margin: 1px;
+  font-size: 1px;
+  float: left;
+}
+
+#dmm-container0-disp-color {
   background-color: #599228;
 }
 
-#main #dmm-container1-disp-color {
+#dmm-container1-disp-color {
   background-color: #0544D3;
 }
 
-#main #dmm-container2-disp-color {
+#dmm-container2-disp-color {
   background-color: #D17905;
 }
 
-#main #dmm-container3-disp-color {
+#dmm-container3-disp-color {
   background-color: #D70206;
 }
 
-#main .disp-val {
-  font-size: 40px;
-  height: 53px;
+.stat-parent {
+  width:   90px;
+  font-size: 0px;
+}
+
+.stat, .stat p {
+  height:  19px;
+  margin:   0px;
+  padding:  0px;
+  font-size: 16px;
+  user-select: all;
+  float: left;
+}
+
+.stat {
+  width:  30px;
+}
+
+.stat p {
+  width:  55px;
+  text-align: right;
+  margin:  0px;
+}
+
+.disp-val {
+  height: 70px;
+  width:  100%;
   margin: 2px;
+  padding: 0px 5px 0px 0px;
+  border: 1px solid #A9A9A9;
+  font-size: 44px;
+  line-height: 70px;
+  text-align: right;
+  user-select: all;
   float: left;
 }
 
-#main .disp-unit {
-  font-size: 40px;
-  height: 53px;
+.disp-unit {
+  width: 72px;
+  height: 70px;
   margin: 2px 2px 2px 0px;
+  padding: 0px;
+  border: 1px solid #A9A9A9;
+  font-size: 44px;
+  line-height: 70px;
+  text-align: left;
+  user-select: all;
   float: left;
 }
 
-#main .disp-color {
+#top-right .mode {
   position: relative;
-  width: 10px;
-  text-align: right;
+  height: 32px;
+  float: right;
 }
 
-#main .disp-val {
-  position: relative;
-  width: 100%;
-  text-align: right;
-}
-
-#main .disp-unit {
-  position: absolute;
-  right: 55px;
-  width: 70px;
-  text-align: left;
-}
-
-#main .top-left .mode {
-  position: absolute;
-  left: 0px;
-}
-
-#main .top-right .mode {
-  position: absolute;
-  right: 0px;
-}
-
-#main .mode {
+.mode {
   width: 52px;
   height: 26px;
   margin: 3px;
   font-size: 13px;
-  float: left
+  float: left;
 }
 
 .switch input[type='checkbox'] {
@@ -130,17 +160,17 @@ body {
   border: 2px solid #ccc;
 }
 
-#main .runbtn input[type='checkbox']:checked + label:after {
+.runbtn input[type='checkbox']:checked + label:after {
   content:"STOP";
   background-color: #009cd3;
   color: #ffffff;
 }
 
-#main .runbtn input[type='checkbox'] + label:after {
+.runbtn input[type='checkbox'] + label:after {
   content:"RUN";
 }
 
-#main #chart-container {
+#chart-container {
   margin: 2px;
   height: 400px;
 }

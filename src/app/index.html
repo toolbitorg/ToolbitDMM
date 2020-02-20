@@ -10,35 +10,42 @@
 <body id="main">
   <div id="wrap">
     <div class="content">
-
-      <!--
-      <div id="top-left">
-        <input id="dmm-container0-disp-color" class="disp-color" type="text" name="color" readonly="readonly">
-      </div>
-      <div id="top" class="clearfix">
-        <div>
-          <input id="' + this.id + 'disp-val" class="disp-val" type="text" name="value" readonly="readonly">
-          <input id="' + this.id + 'disp-unit" class="disp-unit" type="text" name="unit" readonly="readonly">
+<!--
+      <div id="top">
+        <div id="top-left">
+          <input id="dmm-container0-disp-color" class="disp-color" type="text" name="color" readonly="readonly">
+          <div class="stat-parent">
+            <div class="stat">Max:</div>
+            <div class="stat"><p id="dmm-container0-stat-max">0.123</p></div>
+            <div class="stat">Min:</div>
+            <div class="stat"><p id="dmm-container0-stat-min">0.123</p></div>
+            <div class="stat">Ave:</div>
+            <div class="stat"><p id="dmm-container0-stat-ave">0.123</p></div>
+          </div>
         </div>
-        <div class="top-right">
-          <select id="' + this.id + 'range" name="range" class="mode">
+        <div id="top-middle">
+          <p id="' + this.id + '-disp-val" class="disp-val">0.123</p>
+        </div>
+        <div id="top-right">
+          <p id="' + this.id + '-disp-unit" class="disp-unit">mA</p>
+          <select id="' + this.id + '-range" name="range" class="mode">
             <option selected="selected">Auto</option>
             <option></option>
             <option>m</option>
             <option>u</option>
           </select>
           <br>
-          <select id="' + this.id + 'mode" name="mode" class="mode">
+          <select id="' + this.id + '-mode" name="mode" class="mode">
             <option selected="selected">V</option>
             <option>A</option>
           </select>
         </div>
       </div>
--->
-      <div id="dmm-container0"></div>
-      <div id="dmm-container1"></div>
-      <div id="dmm-container2"></div>
-      <div id="dmm-container3"></div>
+      -->
+      <div id="dmm-container0" class="clearfix"></div>
+      <div id="dmm-container1" class="clearfix"></div>
+      <div id="dmm-container2" class="clearfix"></div>
+      <div id="dmm-container3" class="clearfix"></div>
       <div id="second" class="clearfix">
         <select id="interval" name="interval" class="mode">
           <option selected="selected">Fast</option>
@@ -62,9 +69,6 @@
           <button id="reset-zoom" type="button" name="reset-zoom">RESET ZOOM</button>
         </div>
     </div>
-  </div>
-  <div class="adv">
-    <a><img src="images/banner.png" alt="banner"></a>
   </div>
 
   <script src="js/index.js"></script>
