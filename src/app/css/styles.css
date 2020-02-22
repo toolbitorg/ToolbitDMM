@@ -19,106 +19,69 @@ body {
   clear: both;
 }
 
-#top-left {
-  width: 110px;
-  left: 0px;
-  margin: 2px;
-  border: 1px solid #A9A9A9;
-  padding: 0px;
-  float: left;
-}
-
-#top-middle {
-  position: relative;
-  padding-left: 116px;
+.middle {
+  padding-left: 16px;
   padding-right: 146px;
 }
 
-#top-right {
+.right {
   width: 135px;
   right: 0px;
   float: right;
 }
 
-.disp-color {
-  position: relative;
+.ch-color {
   width: 10px;
-  height: 62px;
-  margin: 1px;
+  margin: 2px;
+  border: 1px solid #A9A9A9;
   font-size: 1px;
   float: left;
 }
 
-#dmm-container0-disp-color {
+#top .ch-color {
+  height: 57px;
+}
+
+#dmm-container0-ch-color, #stat-container0-ch-color {
   background-color: #599228;
 }
 
-#dmm-container1-disp-color {
+#dmm-container1-ch-color, #stat-container1-ch-color {
   background-color: #0544D3;
 }
 
-#dmm-container2-disp-color {
+#dmm-container2-ch-color, #stat-container2-ch-color {
   background-color: #D17905;
 }
 
-#dmm-container3-disp-color {
+#dmm-container3-ch-color, #stat-container3-ch-color {
   background-color: #D70206;
 }
 
-.stat-parent {
-  width:   90px;
-  font-size: 0px;
-}
-
-.stat, .stat p {
-  height:  19px;
-  margin:   0px;
-  padding:  0px;
-  font-size: 16px;
-  user-select: all;
-  float: left;
-}
-
-.stat {
-  width:  30px;
-}
-
-.stat p {
-  width:  55px;
-  text-align: right;
-  margin:  0px;
-}
-
 .disp-val {
-  height: 70px;
   width:  100%;
+  height: 57px;
   margin: 2px;
   padding: 0px 5px 0px 0px;
   border: 1px solid #A9A9A9;
-  font-size: 44px;
-  line-height: 70px;
+  font-size: 40px;
+  line-height: 57px;
   text-align: right;
   user-select: all;
   float: left;
 }
 
 .disp-unit {
-  width: 72px;
-  height: 70px;
+  width: 70px;
+  height: 57px;
   margin: 2px 2px 2px 0px;
   padding: 0px;
   border: 1px solid #A9A9A9;
-  font-size: 44px;
-  line-height: 70px;
+  font-size: 40px;
+  line-height: 57px;
   text-align: left;
   user-select: all;
   float: left;
-}
-
-#top-right .mode {
-  position: relative;
-  height: 32px;
-  float: right;
 }
 
 .mode {
@@ -129,8 +92,18 @@ body {
   float: left;
 }
 
+.right .mode {
+  position: relative;
+  height: 26px;
+  float: right;
+}
+
 .switch input[type='checkbox'] {
   display: none;
+}
+
+#stat .mode {
+  margin-top: 5px;
 }
 
 .switch label {
@@ -138,6 +111,7 @@ body {
   height: 25px;
   margin: 2px 2px 4px 2px;
   font-size: 13px;
+  line-height: 25px;
   text-align: center;
   float: left;
   padding-left: 5px;
@@ -175,9 +149,52 @@ body {
   height: 400px;
 }
 
+#stat .ch-color {
+  height: 30px;
+}
+
+.stat-box, .stat-unit {
+  margin: 2px 3px 2px 0px;
+  width: 88px;
+  height: 30px;
+  border: 1px solid #A9A9A9;
+  float: left;
+}
+
+.stat-label, .stat-val {
+  height:  25px;
+  margin:   0px;
+  padding:  0px;
+  font-size: 16px;
+  text-align: right;
+  float: left;
+}
+
+.stat-label {
+  width:  33px;
+  margin: 0px 0px 0px 2px;
+  text-align: left;
+}
+
+.stat-val {
+  width:  50px;
+  text-align: right;
+  user-select: all;
+}
+
+.stat-unit {
+  width: 26px;
+  text-align: center;
+}
+
 .hide {
   display: none;
 }
+
+#second {
+  margin-bottom: 6px;
+}
+
 
 #reset-zoom {
   display: block;
@@ -188,6 +205,7 @@ body {
   height: 29px;
   margin: 2px;
   font-size: 11px;
+  line-height: 11px;
   text-align: center;
   float: right;
   cursor: pointer;
@@ -220,12 +238,4 @@ button:disabled, #reset-zoom:disabled {
   background-color: #e9e9e9;
   color: #ccc;
   border: 2px solid #ccc;
-}
-
-.adv {
-  position: absolute;
-  bottom: 5px;
-  margin: 0px 2px 0px 2px;
-  width: 320px;
-  height: 50px;
 }

@@ -16,8 +16,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-//    width: 340, height: 195, minWidth: 340, minHeight: 195, maxHeight: 631,
-    width: 450, height: 75, minWidth: 450, minHeight: 75, maxHeight: 900,
+    width: 450, height: 78, minWidth: 450, minHeight: 75, maxHeight: 900,
+//    width: 850, height: 575, minWidth: 450, minHeight: 75, maxHeight: 900,
     autoHideMenuBar: true,
     title: "Toolbit DMM " + app.getVersion()
   })

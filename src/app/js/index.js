@@ -32,15 +32,19 @@ var fsm = new StateMachine({
 
     onEnableGraph: function() {
       clearGraph();
-      document.getElementById('chart-container').className = '';
-      document.getElementById('graph-menu').className = '';
-      window.resizeBy(0, 436);
+      document.getElementById('chart-container').className = 'clearfix';
+      document.getElementById('graph-menu').className = 'clearfix';
+      window.resizeBy(0, 450);
     },
 
     onDisableGraph: function() {
       document.getElementById('chart-container').className = 'hide';
       document.getElementById('graph-menu').className = 'hide';
-      window.resizeBy(0, -436);
+      document.getElementById('stat-container0').className = 'hide';
+      document.getElementById('stat-container1').className = 'hide';
+      document.getElementById('stat-container2').className = 'hide';
+      document.getElementById('stat-container3').className = 'hide';
+      window.resizeBy(0, -450 -34*waveformsNum);
     },
 
     onStopLogging: function() {
@@ -65,8 +69,8 @@ var fsm = new StateMachine({
     onResetZoom: function() {
       resetZoomFunc && resetZoomFunc();
       resetZoomFunc = null;
-      for(var i=0; i<connectedDmmNum; i++) {
-        dmmctrl[i].clearStat();
+      for(var i=0; i<waveformsNum; i++) {
+        stat[i].clearStat();
       }
 
       document.getElementById('reset-zoom').disabled = true;
@@ -81,7 +85,9 @@ var fsm = new StateMachine({
         if(file.type.match('application/json')) {
           var reader = new FileReader();
           reader.addEventListener('load', function() {
-            plotData = JSON.parse(this.result);
+            var data = JSON.parse(this.result);
+            plotOptions = data[0];
+            plotData = data[1];
             plotStart = new Date(0);
             console.log('Loaded plot data');
             initializeGraph();
@@ -100,9 +106,14 @@ var fsm = new StateMachine({
 const TbiDeviceManager=require('toolbit-lib').TbiDeviceManager;
 var tbiDeviceManager = new TbiDeviceManager();
 var connectedDmmNum = 0;
+var waveformsNum = 0;
 
 const Dmmctrl=require('./js/dmmctrl');
+const Stat=require('./js/stat');
+
 var dmmctrl = Array(4);
+var stat = Array(4);
+var plotOptions = [{}, {}, {}, {}];
 
 var timeInterval;
 var plotData = [[],[],[],[]];
@@ -122,6 +133,7 @@ var setTimeInterval = function(t) {
 };
 
 var dmmContainers = ['dmm-container0', 'dmm-container1', 'dmm-container2', 'dmm-container3'];
+var statContainers = ['stat-container0', 'stat-container1', 'stat-container2', 'stat-container3'];
 var chartContainer = document.getElementById('chart-container');
 var chart = new Chartist.Line(chartContainer, {}, {});
 
@@ -169,7 +181,7 @@ function openDevice() {
       return;
     }
     connectedDmmNum++;
-    window.resizeBy(0, 78);
+    window.resizeBy(0, 63);
   }
 
   setTimeInterval(document.getElementById('interval').value);
@@ -193,7 +205,7 @@ function openDevice() {
     }
   });
   document.getElementById('save').addEventListener('click', function() {
-    exportData(plotData);
+    exportData([plotOptions, plotData]);
   });
 
   enableElements(document.getElementById('main').getElementsByTagName('input'));
@@ -240,14 +252,18 @@ function initialize() {
   document.getElementById('reset-zoom').disabled = true;
 
   openDevice();
-};
+
+  for(var i=0; i<4; i++) {
+    stat[i] = new Stat(statContainers[i]);
+  }
+}
 
 var resetZoomFunc;
 function onZoom(chart, reset) {
   resetZoomFunc = reset;
   console.log(chart.options.axisX.highLow);
-  for(var i=0; i<connectedDmmNum; i++) {
-    dmmctrl[i].showStat(chart.options.axisX.highLow.low, chart.options.axisX.highLow.high);
+  for(var i=0; i<waveformsNum; i++) {
+    stat[i].showStat(chart.options.axisX.highLow.low, chart.options.axisX.highLow.high);
   }
 }
 
@@ -319,10 +335,37 @@ function initializeGraph() {
       })
     ]
   });  // end of options
+
+  // Prepare statics area
+  waveformsNum = 0;
+  for(var i=0; i<4; i++) {
+    if(plotData[i].length>1) {
+      stat[i].setData(plotData[i], plotOptions[i].mode);
+      waveformsNum++;
+    }
+  }
+  if(waveformsNum==0) {
+    for(var i=0; i<connectedDmmNum; i++) {
+      plotOptions[i].mode = dmmctrl[i].mode;
+      stat[i].setData(plotData[i], plotOptions[i].mode);
+      waveformsNum++;
+    }
+  }
+
+  for(var i=0; i<4; i++) {
+    var divElem = document.getElementById('stat-container'+ i);
+    if(i<waveformsNum && divElem.className=="hide") {
+      divElem.className = 'clearfix';
+      window.resizeBy(0, 34);
+    } else if(i>=waveformsNum && divElem.className=="clearfix") {
+      divElem.className = 'hide';
+      window.resizeBy(0, -34);
+    }
+
+  }
 }
 
 function clearGraph() {
-
   plotData = [[],[],[],[]];
   for(var i=0; i<connectedDmmNum; i++) {
     dmmctrl[i].clearPlotdat();

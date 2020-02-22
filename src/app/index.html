@@ -11,35 +11,58 @@
   <div id="wrap">
     <div class="content">
 <!--
-      <div id="top">
-        <div id="top-left">
-          <input id="dmm-container0-disp-color" class="disp-color" type="text" name="color" readonly="readonly">
-          <div class="stat-parent">
-            <div class="stat">Max:</div>
-            <div class="stat"><p id="dmm-container0-stat-max">0.123</p></div>
-            <div class="stat">Min:</div>
-            <div class="stat"><p id="dmm-container0-stat-min">0.123</p></div>
-            <div class="stat">Ave:</div>
-            <div class="stat"><p id="dmm-container0-stat-ave">0.123</p></div>
+      <div id="dmm-container0" class="clearfix">
+
+        <div id="top">
+          <div class="left">
+            <div id="dmm-container0-ch-color" class="ch-color"></div>
+          </div>
+          <div class="middle">
+            <p id="' + this.id + '-disp-val" class="disp-val">0.123</p>
+          </div>
+          <div class="right">
+            <p id="' + this.id + '-disp-unit" class="disp-unit">mA</p>
+            <select id="' + this.id + '-range" name="range" class="mode">
+              <option selected="selected">Auto</option>
+              <option></option>
+              <option>m</option>
+              <option>u</option>
+            </select>
+            <br>
+            <select id="' + this.id + '-mode" name="mode" class="mode">
+              <option selected="selected">V</option>
+              <option>A</option>
+            </select>
           </div>
         </div>
-        <div id="top-middle">
-          <p id="' + this.id + '-disp-val" class="disp-val">0.123</p>
-        </div>
-        <div id="top-right">
-          <p id="' + this.id + '-disp-unit" class="disp-unit">mA</p>
+
+      </div>
+      -<br>
+      <div id="stat-container0" class="clearfix">
+
+        <div id="stat">
+          <div id="stat-container0-ch-color" class="ch-color"></div>
+          <div class="stat-box">
+            <p id="' + this.id + '-max-label" class="stat-label"> Max</p>
+            <p id="' + this.id + '-max-val" class="stat-val">-8.123</p>
+          </div>
+          <div class="stat-box">
+            <p id="' + this.id + '-min-label" class="stat-label"> Min</p>
+            <p id="' + this.id + '-min-val" class="stat-val">-8.123</p>
+          </div>
+          <div class="stat-box">
+            <p id="' + this.id + '-ave-label" class="stat-label"> Ave</p>
+            <p id="' + this.id + '-ave-val" class="stat-val">-8.123</p>
+          </div>
+          <p id="' + this.id + '-unit" class="stat-unit">mV</p>
           <select id="' + this.id + '-range" name="range" class="mode">
             <option selected="selected">Auto</option>
             <option></option>
             <option>m</option>
             <option>u</option>
           </select>
-          <br>
-          <select id="' + this.id + '-mode" name="mode" class="mode">
-            <option selected="selected">V</option>
-            <option>A</option>
-          </select>
         </div>
+
       </div>
       -->
       <div id="dmm-container0" class="clearfix"></div>
@@ -57,6 +80,10 @@
           <input id="graph" type="checkbox" name="graph" /><label for="graph">GRAPH</label>
         </div>
       </div>
+      <div id="stat-container0" class="hide"></div>
+      <div id="stat-container1" class="hide"></div>
+      <div id="stat-container2" class="hide"></div>
+      <div id="stat-container3" class="hide"></div>
       <div id="chart-container" class="hide"></div>
       <div id="graph-menu" class="hide">
         <div class="switch">
