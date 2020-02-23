@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+const ipc = require('electron').ipcMain
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
@@ -16,7 +17,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 450, height: 78, minWidth: 450, minHeight: 75, maxHeight: 900,
+    width: 450, height: 76, minWidth: 450, minHeight: 76, maxHeight: 900,
 //    width: 850, height: 575, minWidth: 450, minHeight: 75, maxHeight: 900,
     autoHideMenuBar: true,
     title: "Toolbit DMM " + app.getVersion()
@@ -76,3 +77,7 @@ app.on('activate', function () {
 app.on('ready', function()  {
   autoUpdater.checkForUpdatesAndNotify();
 });
+
+ipc.on('get-app-version', function(event) {
+  event.sender.send('got-app-version', app.getVersion())
+})

@@ -11,6 +11,13 @@ const Chartist=require('chartist');
 require('./js/chartist-plugin-zoom/dist/chartist-plugin-zoom');
 var StateMachine = require('javascript-state-machine');
 
+const ipc = require('electron').ipcRenderer;
+var plotInfo = {};
+ipc.send('get-app-version');
+ipc.on('got-app-version', function(event, version) {
+  plotInfo.swVersion = version;
+})
+
 var fsm = new StateMachine({
   init: 'nograph',
   transitions: [
@@ -53,10 +60,6 @@ var fsm = new StateMachine({
 
     onStartLogging: function(lifecycle) {
       clearGraph();
-      if(lifecycle.from=='stop-zoom') {
-        resetZoomFunc = null;
-        document.getElementById('reset-zoom').disabled = true;
-      }
       document.getElementById('run').checked = true;
       document.getElementById('save').disabled = false;
       document.getElementById('reset-zoom').disabled = true;
@@ -77,27 +80,8 @@ var fsm = new StateMachine({
     },
 
     onLoad: function() {
-      let fin = document.createElement('input');
-      fin.type = 'file';
-      fin.accept = '.json';
-      fin.addEventListener('change', function(e) {
-        var file = e.target.files[0];
-        if(file.type.match('application/json')) {
-          var reader = new FileReader();
-          reader.addEventListener('load', function() {
-            var data = JSON.parse(this.result);
-            plotOptions = data[0];
-            plotData = data[1];
-            plotStart = new Date(0);
-            console.log('Loaded plot data');
-            initializeGraph();
-          })
-        reader.readAsText(file);
-        document.getElementById('save').disabled = true;
-        document.getElementById('reset-zoom').disabled = true;
-        }
-      });
-      fin.click();
+      document.getElementById('save').disabled = true;
+      document.getElementById('reset-zoom').disabled = true;
     }
 
   }
@@ -205,7 +189,7 @@ function openDevice() {
     }
   });
   document.getElementById('save').addEventListener('click', function() {
-    exportData([plotOptions, plotData]);
+    exportData([plotInfo, plotOptions, plotData]);
   });
 
   enableElements(document.getElementById('main').getElementsByTagName('input'));
@@ -235,15 +219,35 @@ function initialize() {
     }
   });
 
-  document.getElementById('load').addEventListener('click', function() {
-    if(fsm.state=='run' || fsm.state=='run-zoom') {
-      if(window.confirm("Is it OK to stop recording?")) {
-        fsm.stopLogging();
-      } else {
-        return;
-      }
+  var fin = document.createElement('input');
+  fin.type = 'file';
+  fin.accept = '.json';
+  fin.addEventListener('change', function(e) {
+    document.getElementById('load').disabled = true;
+    var file = e.target.files[0];
+
+    if(file.type.match('application/json')) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function() {
+        var data = JSON.parse(this.result);
+        if(fsm.state=='run' || fsm.state=='run-zoom') {
+          fsm.stopLogging();
+        }
+        plotInfo = data[0];
+        plotOptions = data[1];
+        plotData = data[2];
+        plotStart = new Date(0);
+        fsm.load();
+        initializeGraph();
+        document.getElementById('load').disabled = false;
+      })
+      reader.readAsText(file);
+      e.target.value = '';   // reset value to load the same file again
     }
-    fsm.load();
+  });
+
+  document.getElementById('load').addEventListener('click', function() {
+    fin.click();
   });
 
   document.getElementById('reset-zoom').addEventListener('click', (event) => {
@@ -366,6 +370,9 @@ function initializeGraph() {
 }
 
 function clearGraph() {
+  if(fsm.state=='stop-zoom' || fsm.state=='run-zoom') {
+    fsm.resetZoom();
+  }
   plotData = [[],[],[],[]];
   for(var i=0; i<connectedDmmNum; i++) {
     dmmctrl[i].clearPlotdat();

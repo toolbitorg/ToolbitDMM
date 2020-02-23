@@ -10,6 +10,7 @@ class Dmmctrl {
     this.mode_;
     this.range;
     this.holdChecked = false;
+    this.hold = false;
     this.unit = '';
 
     this.init();
@@ -70,9 +71,21 @@ class Dmmctrl {
         clearGraph();
       }
     });
+
     document.getElementById(this.id + '-range').addEventListener('change', (event) => {
       this.range = event.target.value;
     });
+
+    document.getElementById(this.id + '-disp-val').addEventListener('mousedown', (event) => {
+      this.hold = true;
+    });
+    document.getElementById(this.id + '-disp-val').addEventListener('mouseup', (event) => {
+      this.hold = false;
+    });
+    document.getElementById(this.id + '-disp-val').addEventListener('mouseout', (event) => {
+      this.hold = false;
+    });
+    
   }
 
   hold(val) {
@@ -97,7 +110,7 @@ class Dmmctrl {
       this.plotdat_.push({x: tdiff, y: val});
     }
 
-    if(!this.holdChecked) {
+    if(!this.holdChecked && !this.hold) {
       this.showVal(val);
     }
   }
