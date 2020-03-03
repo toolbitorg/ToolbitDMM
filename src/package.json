@@ -1,6 +1,6 @@
 {
   "name": "ToolbitDMM",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Toolibt DMM GUI application",
   "main": "main.js",
   "build": {
@@ -42,7 +42,7 @@
     "electron-updater": "^4.2.0",
     "javascript-state-machine": "^3.1.0",
     "moment": "^2.24.0",
-    "toolbit-lib": "^0.0.6"
+    "toolbit-lib": "^1.0.0"
   },
   "devDependencies": {
     "electron": "^4.2.12",
