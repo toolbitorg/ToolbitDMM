@@ -38,15 +38,15 @@
   "license": "GPL-2.0-only",
   "dependencies": {
     "chartist": "^0.11.4",
-    "electron-log": "^4.0.3",
-    "electron-updater": "^4.2.0",
+    "electron-log": "^4.0.7",
+    "electron-updater": "^4.2.4",
     "javascript-state-machine": "^3.1.0",
     "moment": "^2.24.0",
     "toolbit-lib": "^1.0.0"
   },
   "devDependencies": {
     "electron": "^4.2.12",
-    "electron-builder": "^22.2.0",
+    "electron-builder": "^22.4.0",
     "electron-notarize": "^0.2.1"
   },
   "bugs": {
