@@ -1,6 +1,6 @@
 {
   "name": "ToolbitDMM",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Toolibt DMM GUI application",
   "main": "main.js",
   "build": {

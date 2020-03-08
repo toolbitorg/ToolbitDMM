@@ -176,7 +176,7 @@ function openDevice() {
   });
   document.getElementById('hold').addEventListener('change', function() {
     for(var i=0; i<connectedDmmNum; i++) {
-      dmmctrl[i].hold(this.checked);
+      dmmctrl[i].setHold(this.checked);
     }
     console.log('holdChecked:' + this.checked);
   });

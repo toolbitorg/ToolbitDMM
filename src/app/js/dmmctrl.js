@@ -85,10 +85,10 @@ class Dmmctrl {
     document.getElementById(this.id + '-disp-val').addEventListener('mouseout', (event) => {
       this.hold = false;
     });
-    
+
   }
 
-  hold(val) {
+  setHold(val) {
     this.holdChecked = val;
   }
 
